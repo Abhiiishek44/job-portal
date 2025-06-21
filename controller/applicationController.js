@@ -1,4 +1,4 @@
-const application=require("../models/application")
+const Application=require("../models/application")
 const user= require("../models/user")
 
 const applyForJob= async(req,res)=>{
@@ -7,12 +7,12 @@ const applyForJob= async(req,res)=>{
         if(!jobId || !applicantId || !resume){
             return res.status(400).json({message: "Missing required fields"})
         }
-        const alreadyApplied=await application.findOne({jobId,applicantId});
+        const alreadyApplied=await Application.findOne({jobId,applicantId});
         if(alreadyApplied){
             return res.status(400).json({message:"Already applied for this  job"})
         }
      
-         const application=await application.create({
+         const application=await Application.create({
             jobId,
             applicantId,
             resume,
@@ -20,14 +20,14 @@ const applyForJob= async(req,res)=>{
             res.status(201).json({ message: "Application submitted", data: application });
 
     }catch(err){
-         res.status(500).json({ message: "Server error", error });
+          res.status(500).json({ message: "Server error", error: err.message });
     }
 }
  // Get all applications for a job (for user dashboard)
 const getApplicationByUser=async (req,res)=>{
     try{
        const userId=req.params.Id;
-       const application=await application.find({applicantId:userId})
+       const application=await Application.find({applicantId:userId})
 
        res.status(200).json(application)
     }catch(error){
@@ -41,7 +41,7 @@ const getApplicationByJob= async (req,res)=>{
     try{
         const jobId=req.params.jobId;
 
-        const applications=await application.find({jobId})
+        const applications=await Application.find({jobId})
 
         res.status(200).json(applications);
     }catch(err){

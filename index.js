@@ -2,9 +2,10 @@ const express = require("express");
 const mongoose = require("mongoose");
  const userRouter = require("./routers/user");
 const jobRouter = require("./routers/job"); 
-const applicationRouter=require("./routers/application")
+const companyRouter = require("./routers/company");
+const applicationRouter = require("./routers/application");
 const app = express();
-const port = 5000;
+const port = 4000;
 
 // Middleware
 app.use(express.json());
@@ -20,6 +21,8 @@ mongoose.connect("mongodb://localhost:27017/naukri", {
 app.use("/api/applications", applicationRouter);
 app.use("/api/jobs", jobRouter);
 app.use("/api/users", userRouter);
+app.use('/api/companies', companyRouter);
+
 
 // Start Server
 app.listen(port, () => {
