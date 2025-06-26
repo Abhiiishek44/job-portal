@@ -44,7 +44,7 @@ const LoginPage = () => {
 
       // ✅ Redirect
       role === "user"
-        ? navigate("/userDashboard")
+        ? navigate("/UserProfile")
         : navigate("/CompanyDashboard");
     } else {
       alert("Invalid response from server");

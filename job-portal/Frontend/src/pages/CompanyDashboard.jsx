@@ -6,6 +6,7 @@ const CompanyDashboard = () => {
 
   const [company, setCompany] = useState(null); // 👈 for profile
   const [jobData, setJobData] = useState({
+    companyName:"",
     title: "",
     description: "",
     location: "",
@@ -65,6 +66,7 @@ const handleSubmit = async (e) => {
       });
       alert("Job posted successfully!");
       setJobData({
+        companyName:"",
         title: "",
         description: "",
         location: "",
@@ -138,6 +140,15 @@ const handleSubmit = async (e) => {
             required
             className="w-full mb-3 px-3 py-2 border rounded"
           />
+          <input
+            type="text"
+            name="companyName"
+            placeholder="companyName"
+            value={jobData.companyName}
+            onChange={handleChange}
+            required
+            className="w-full mb-3 px-3 py-2 border rounded"
+          />
           <textarea
             name="description"
             placeholder="Job Description"
@@ -146,6 +157,7 @@ const handleSubmit = async (e) => {
             required
             className="w-full mb-3 px-3 py-2 border rounded"
           />
+            
           <input
             type="text"
             name="location"
@@ -199,12 +211,16 @@ const handleSubmit = async (e) => {
                 <div
                   key={job._id}
                   className="border border-gray-200 rounded-xl p-5 hover:shadow-md transition-all duration-200 bg-gradient-to-br from-white to-gray-50"
-                >
+                > 
                   <h3 className="text-xl font-semibold text-blue-600">
                     {job.title}
                   </h3>
                   <p className="text-gray-700 mt-2">{job.description}</p>
                   <div className="mt-3 space-y-1 text-sm text-gray-600">
+                     <p>
+                      <span className="font-medium">Company name:</span>{" "}
+                      {job.companyName}
+                    </p>
                     <p>
                       <span className="font-medium">📍 Location:</span>{" "}
                       {job.location}
