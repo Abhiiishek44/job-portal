@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useEffect } from "react";
+import Sidebar from "./SideBar";
+
 const ProfileCard = () => {
   const [name, setName] = useState("");
   const [username] = useState("");
@@ -106,152 +108,167 @@ const handleSave = async () => {
   // };
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-6 max-w-2xl absolute right-0 w-full mx-auto">
-      <div className="flex items-center mb-4 bg-gray-100 p-4 rounded-lg">
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuNhTZJTtkR6b-ADMhmzPvVwaLuLdz273wvQ&s"
-          alt="Profile"
-          className="w-20 h-20 rounded-full mr-4"
-        />
-        <div>
-          <h2 className="text-xl font-semibold">{name}</h2>
-          <p className="text-gray-500">{username}</p>
-        </div>
-      </div>
+    <div className="flex min-h-screen bg-gray-100">
+  {/* Sidebar (Left) */}
+   
+     <Sidebar /> 
 
-      <div className="mb-4">
-        <h3 className="text-lg font-semibold">About</h3>
-        <p className="text-gray-700">{about}</p>
+  {/* User Profile Content (Right) */}
+  <div className="flex-1 bg-white shadow-md rounded-lg p-6 ">
+    {/* Profile Header */}
+    <div className="flex items-center mb-4 bg-gray-100 p-4 rounded-lg flex-col items-center space-y-2">
+      <img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuNhTZJTtkR6b-ADMhmzPvVwaLuLdz273wvQ&s"
+        alt="Profile"
+        className="w-20 h-20 rounded-full mr-4 "
+      />
+  <button className="px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600 transition">
+      Upload Image
+    </button>
+      <div>
+        <h2 className="text-xl font-semibold">{name}</h2>
+        <p className="text-gray-500">{username}</p>
       </div>
+    </div>
 
-      <div className="mb-4">
-        <h3 className="text-lg font-semibold">Skills</h3>
-        <ul className="list-disc pl-5 text-gray-700">
-          {skills.map((skill, i) => (
-            <li key={i}>{skill}</li>
-          ))}
-        </ul>
-      </div>
+    {/* About */}
+    <div className="mb-4">
+      <h3 className="text-lg font-semibold">About</h3>
+      <p className="text-gray-700">{about}</p>
+    </div>
 
-      <div className="mb-4">
-        <h3 className="text-lg font-semibold">Experience</h3>
-        <p className="text-gray-700">{experience}</p>
-      </div>
+    {/* Skills */}
+    <div className="mb-4">
+      <h3 className="text-lg font-semibold">Skills</h3>
+      <ul className="list-disc pl-5 text-gray-700">
+        {skills.map((skill, i) => (
+          <li key={i}>{skill}</li>
+        ))}
+      </ul>
+    </div>
 
-      <div className="mb-4">
-        <h3 className="text-lg font-semibold">Education</h3>
-        <p className="text-gray-700">{education}</p>
-      </div>
+    {/* Experience */}
+    <div className="mb-4">
+      <h3 className="text-lg font-semibold">Experience</h3>
+      <p className="text-gray-700">{experience}</p>
+    </div>
 
-      <div className="mb-4">
-        <h3 className="text-lg font-semibold">Projects</h3>
-        <p className="text-gray-700">{project}</p>
-      </div>
-      {/* //resume upload */}
-      <div className="mb-4">
-        <h3 className="text-lg font-semibold">Resume</h3>
-        {resumeUrl ? (
-          <a
-            href={resumeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-500 hover:underline"
-          >
-            View Resume
-          </a>
-        ) : (
-          <p className="text-gray-700">No resume uploaded yet.</p>
-        )}
-      </div>
+    {/* Education */}
+    <div className="mb-4">
+      <h3 className="text-lg font-semibold">Education</h3>
+      <p className="text-gray-700">{education}</p>
+    </div>
 
-      <div className="text-center">
-        <button
-          onClick={() => setIsEditing(true)}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+    {/* Projects */}
+    <div className="mb-4">
+      <h3 className="text-lg font-semibold">Projects</h3>
+      <p className="text-gray-700">{project}</p>
+    </div>
+
+    {/* Resume */}
+    <div className="mb-4">
+      <h3 className="text-lg font-semibold">Resume</h3>
+      {resumeUrl ? (
+        <a
+          href={resumeUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-500 hover:underline"
         >
-          Edit Profile
-        </button>
-      </div>
-
-      {/* Modal */}
-      {isEditing && (
-        <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded-b-none w-full max-w-lg shadow-xl max-h-[90vh] overflow-y-auto  ">
-            <h2 className="text-xl font-bold mb-4">Edit Profile</h2>
-
-            <label className="block mb-2 text-sm font-semibold">Name</label>
-            <input
-              className="w-full border px-4 py-2 rounded mb-4"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-
-            <label className="block mb-2 text-sm font-semibold">About</label>
-            <textarea
-              className="w-full border px-4 py-2 rounded mb-4"
-              value={about}
-              onChange={(e) => setAbout(e.target.value)}
-            />
-
-            <label className="block mb-2 text-sm font-semibold">
-              Skills (comma separated)
-            </label>
-            <input
-              className="w-full border px-4 py-2 rounded mb-4"
-              value={skills.join(", ")}
-              onChange={handleSkillChange}
-            />
-
-            <label className="block mb-2 text-sm font-semibold">
-              Experience
-            </label>
-            <input
-              className="w-full border px-4 py-2 rounded mb-4"
-              value={experience}
-              onChange={(e) => setExperience(e.target.value)}
-            />
-
-            <label className="block mb-2 text-sm font-semibold">
-              Education
-            </label>
-            <input
-              className="w-full border px-4 py-2 rounded mb-4"
-              value={education}
-              onChange={(e) => setEducation(e.target.value)}
-            />
-
-            <label className="block mb-2 text-sm font-semibold">Project</label>
-            <input
-              className="w-full border px-4 py-2 rounded mb-4"
-              value={project}
-              onChange={(e) => setProject(e.target.value)}
-            />
-
-            <form action="/upload" method="POST" encType="multipart/form-data">
-              <label className="block mb-2 text-sm font-semibold">
-                Resume upload
-              </label>
-              <input type="file" name="resume" onChange={handleChange} />
-            </form>
-
-            <div className="flex justify-end space-x-3">
-              <button
-                onClick={() => setIsEditing(false)}
-                className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleSave}
-                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-              >
-                Save
-              </button>
-            </div>
-          </div>
-        </div>
+          View Resume
+        </a>
+      ) : (
+        <p className="text-gray-700">No resume uploaded yet.</p>
       )}
     </div>
+
+    {/* Edit Button */}
+    <div className="text-center">
+      <button
+        onClick={() => setIsEditing(true)}
+        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+      >
+        Edit Profile
+      </button>
+    </div>
+
+    {/* Edit Modal */}
+    {isEditing && (
+      <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
+        <div className="bg-white p-6 rounded-b-none w-full max-w-lg shadow-xl max-h-[90vh] overflow-y-auto">
+          <h2 className="text-xl font-bold mb-4">Edit Profile</h2>
+
+          <label className="block mb-2 text-sm font-semibold">Name</label>
+          <input
+            className="w-full border px-4 py-2 rounded mb-4"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+
+          <label className="block mb-2 text-sm font-semibold">About</label>
+          <textarea
+            className="w-full border px-4 py-2 rounded mb-4"
+            value={about}
+            onChange={(e) => setAbout(e.target.value)}
+          />
+
+          <label className="block mb-2 text-sm font-semibold">
+            Skills (comma separated)
+          </label>
+          <input
+            className="w-full border px-4 py-2 rounded mb-4"
+            value={skills.join(", ")}
+            onChange={handleSkillChange}
+          />
+
+          <label className="block mb-2 text-sm font-semibold">Experience</label>
+          <input
+            className="w-full border px-4 py-2 rounded mb-4"
+            value={experience}
+            onChange={(e) => setExperience(e.target.value)}
+          />
+
+          <label className="block mb-2 text-sm font-semibold">Education</label>
+          <input
+            className="w-full border px-4 py-2 rounded mb-4"
+            value={education}
+            onChange={(e) => setEducation(e.target.value)}
+          />
+
+          <label className="block mb-2 text-sm font-semibold">Project</label>
+          <input
+            className="w-full border px-4 py-2 rounded mb-4"
+            value={project}
+            onChange={(e) => setProject(e.target.value)}
+          />
+
+          <form encType="multipart/form-data">
+            <label className="block mb-2 text-sm font-semibold">
+              Resume upload
+            </label>
+            <input type="file" name="resume" onChange={handleChange} />
+          </form>
+
+          <div className="flex justify-end space-x-3 mt-4">
+            <button
+              onClick={() => setIsEditing(false)}
+              className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleSave}
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
+  </div>
+</div>
+
   );
 };
 

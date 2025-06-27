@@ -10,7 +10,7 @@ import RegisterPage from "./pages/registeration.jsx";
 import CompanyDashboard from "./pages/CompanyDashboard.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
 import UserJobsView from "./pages/viewAllJobs.jsx";
-
+import Sidebar from "./pages/SideBar.jsx";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -32,6 +32,7 @@ function App() {
         <Route path="/CompanyDashboard" element={<CompanyDashboard />} />
         <Route path="/UserProfile" element={<UserProfile/>} />
         <Route path="/viewAllJobs" element={<UserJobsView />} />
+        <Route path="/jobs" element={<UserJobsView/>}/>
       </Routes>
     </Router>
   );

@@ -6,12 +6,13 @@ const CompanyDashboard = () => {
 
   const [company, setCompany] = useState(null); // 👈 for profile
   const [jobData, setJobData] = useState({
-    companyName:"",
+    companyName: "",
     title: "",
     description: "",
     location: "",
     salary: "",
     skills: "",
+    jobType: "",
   });
   const [jobs, setJobs] = useState([]);
 
@@ -31,7 +32,7 @@ const CompanyDashboard = () => {
   };
 
   // ✅ Get jobs posted by company
-const fetchJobs = async () => {
+  const fetchJobs = async () => {
     try {
       const res = await axios.get(
         `http://localhost:4000/api/jobs/companyJob/${companyId}`
@@ -49,14 +50,14 @@ const fetchJobs = async () => {
   }, [activeTab]);
 
   // ✅ Handle input changes
-const handleChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setJobData((prev) => ({ ...prev, [name]: value }));
   };
 
   // ✅ Submit new job
-const handleSubmit = async (e) => {
-         e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const payLoad = { jobData, companyId };
     console.log("Job Data:", payLoad);
     try {
@@ -66,12 +67,13 @@ const handleSubmit = async (e) => {
       });
       alert("Job posted successfully!");
       setJobData({
-        companyName:"",
+        companyName: "",
         title: "",
         description: "",
         location: "",
         salary: "",
         skills: "",
+        jobType: "",
       });
       fetchJobs();
     } catch (err) {
@@ -157,7 +159,7 @@ const handleSubmit = async (e) => {
             required
             className="w-full mb-3 px-3 py-2 border rounded"
           />
-            
+
           <input
             type="text"
             name="location"
@@ -185,6 +187,19 @@ const handleSubmit = async (e) => {
             required
             className="w-full mb-4 px-3 py-2 border rounded"
           />
+          <select
+            name="jobType"
+            value={jobData.jobType}
+            onChange={handleChange}
+            required
+            className="w-full mb-4 px-3 py-2 border rounded"
+          >
+            <option value="">Select Job Type</option>
+            <option value="Full-Time">🕒 Full-Time</option>
+            <option value="Part-Time">⏳ Part-Time</option>
+            <option value="Internship">🎓 Internship</option>
+            <option value="Remote">🌐 Remote</option>
+          </select>
           <button
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
@@ -211,13 +226,13 @@ const handleSubmit = async (e) => {
                 <div
                   key={job._id}
                   className="border border-gray-200 rounded-xl p-5 hover:shadow-md transition-all duration-200 bg-gradient-to-br from-white to-gray-50"
-                > 
+                >
                   <h3 className="text-xl font-semibold text-blue-600">
                     {job.title}
                   </h3>
                   <p className="text-gray-700 mt-2">{job.description}</p>
                   <div className="mt-3 space-y-1 text-sm text-gray-600">
-                     <p>
+                    <p>
                       <span className="font-medium">Company name:</span>{" "}
                       {job.companyName}
                     </p>
@@ -232,6 +247,10 @@ const handleSubmit = async (e) => {
                     <p>
                       <span className="font-medium">🛠 Skills:</span>{" "}
                       {job.skills}
+                    </p>
+                    <p>
+                      <span className="font-medium">💼 Job Type:</span>{" "}
+                      {job.jobType}
                     </p>
                   </div>
                 </div>

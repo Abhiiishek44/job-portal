@@ -39,6 +39,7 @@ const UserJobsView = () => {
               <p className="text-gray-700">🏢 Company: {job.companyName}</p>
               <p className="text-gray-700">📍 Location: {job.location}</p>
               <p className="text-gray-700">🕒 Posted: {job.postedDate || "Recently"}</p>
+              <p className="text-gray-700">💼 Job type: {job.jobType}</p>
               <p className="text-gray-700 mt-2">
                 📝 <strong>Description:</strong> {job.description}
               </p>
